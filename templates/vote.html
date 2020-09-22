@@ -1,0 +1,994 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <title>Vote</title>
+
+    <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport'/>
+    <meta name="viewport" content="width=device-width"/>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://unpkg.com/vuex"></script>
+
+    <!--     Fonts and icons     -->
+    <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet'>
+    <link rel="stylesheet" type="text/css3"
+          href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css"/>
+
+    <!-- CSS Files -->
+    <link href="{% static 'css3/bootstrap.min.css' %}" rel="stylesheet"/>
+    <link href="{% static 'css3/material-bootstrap-wizard.css' %}" rel="stylesheet"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'css3/radio.css' %}">
+
+    <style>
+        .inactiveLink {
+            pointer-events: none;
+            cursor: default;
+        }
+
+        .shadow {
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+            border-radius: 10px;
+
+        }
+
+        .slogan {
+            font-family: Arial, Helvetica, sans-serif;
+            font-weight: bold;
+            margin-top: 15px;
+            text-align: center;
+            color: #4a4a4a;
+
+        }
+
+    </style>
+    <script type="text/javascript">
+        let imagea, imagetimeout, slogantimeout, imagebtimeout, sloganb, sloganbtimeout, slogan, imageb;
+        let imagec, imagectimeout, sloganctimeout, sloganc, imaged, imagedtimeout, slogandtimeout, slogand;
+        imagea = 0;
+        slogan = 0;
+        imageb = 0;
+        sloganb = 0;
+        imagec = 0;
+        sloganc = 0;
+        imaged = 0;
+        slogand = 0;
+
+        window.onload = function () {
+            checkcookies();
+
+        };
+         function setcookie() {
+            document.cookie = "page=1;";
+        }
+
+        function checkcookies() {
+            var page = getCookie("page");
+            if (page !== "") {
+                if (page >= "1") {
+                    document.getElementById("next").disabled = false;
+                    document.getElementById("next2").disabled = false;
+                    document.getElementById("next3").disabled = false;
+                    document.getElementById("next4").disabled = false;
+                    var element1 = document.getElementById("tab2");
+                    var element2 = document.getElementById("tab3");
+                    var element3 = document.getElementById("tab4");
+                    element1.classList.remove("inactiveLink");
+                    element2.classList.remove("inactiveLink");
+                    element3.classList.remove("inactiveLink");
+
+
+
+                }
+            }
+        }
+
+        function getCookie(cname) {
+            var name = cname + "=";
+            var decodedCookie = decodeURIComponent(document.cookie);
+            var ca = decodedCookie.split(';');
+            for (var i = 0; i < ca.length; i++) {
+                var c = ca[i];
+                while (c.charAt(0) == ' ') {
+                    c = c.substring(1);
+                }
+                if (c.indexOf(name) == 0) {
+                    return c.substring(name.length, c.length);
+                }
+            }
+            return "";
+        }
+
+
+        //image
+        function changeImageP(a) {
+            const fadeTarget = document.getElementById("img");
+            fadeTarget.style.opacity = "0";
+            document.getElementById("img").src = a;
+            fadeTarget.style.transition = "opacity 0.3s";
+            fadeTarget.style.opacity = "1";
+            imagea = a;
+        }
+
+        function fadeOutEffect(a) {
+            if (imagea === 0) {
+                const fadeTarget = document.getElementById("img");
+                fadeTarget.style.opacity = "1";
+                fadeTarget.style.transition = "opacity 0.3s";
+                fadeTarget.style.opacity = "0";
+            } else {
+                if (imagea !== a) {
+                    const fadeTarget = document.getElementById("img");
+                    fadeTarget.style.opacity = "1";
+                    fadeTarget.style.transition = "opacity 0.3s";
+                    fadeTarget.style.opacity = "0";
+                    imagetimeout = setTimeout(function () {
+                        document.getElementById("img").src = imagea;
+                        fadeTarget.style.opacity = "0";
+                        fadeTarget.style.transition = "opacity 0.3s";
+                        fadeTarget.style.opacity = "1";
+                    }, 300);
+
+
+                }
+            }
+        }
+
+        function fadeInEffect() {
+            const fadeTarget = document.getElementById("img");
+            fadeTarget.style.opacity = "0";
+            fadeTarget.style.transition = "opacity 0.3s";
+            fadeTarget.style.opacity = "1";
+        }
+
+        function changeImage(a) {
+            if (imagea !== a) {
+                const fadeTarget = document.getElementById("img");
+                fadeTarget.style.opacity = "1";
+                fadeTarget.style.transition = "opacity 0.3s";
+                fadeTarget.style.opacity = "0";
+                clearTimeout(imagetimeout);
+                setTimeout(function () {
+                    document.getElementById("img").src = a;
+                    fadeTarget.style.opacity = "0";
+                    fadeTarget.style.transition = "opacity 0.1s";
+                    fadeTarget.style.opacity = "1";
+                }, 300);
+            }
+        }
+
+        //Slogan
+        function changeSloganP(a) {
+            const fadeTarget = document.getElementById("slogan");
+            fadeTarget.style.opacity = "0";
+            fadeTarget.innerHTML = a;
+            fadeTarget.style.visibility = 'visible';
+            fadeTarget.style.transition = "opacity 0.3s";
+            fadeTarget.style.opacity = "1";
+            slogan = a;
+
+        }
+
+        function SloganFadeOutEffect(a) {
+            if (slogan === 0) {
+                const fadeTarget = document.getElementById("slogan");
+                fadeTarget.style.opacity = "1";
+                fadeTarget.style.transition = "opacity 0.3s";
+                fadeTarget.style.opacity = "0";
+            } else {
+                if (slogan !== a) {
+                    const fadeTarget = document.getElementById("slogan");
+                    fadeTarget.style.opacity = "1";
+                    fadeTarget.style.transition = "opacity 0.3s";
+                    fadeTarget.style.opacity = "0";
+                    slogantimeout = setTimeout(function () {
+                        fadeTarget.innerHTML = slogan;
+                        fadeTarget.style.opacity = "0";
+                        fadeTarget.style.transition = "opacity 0.3s";
+                        fadeTarget.style.opacity = "1";
+                    }, 300);
+
+
+                }
+            }
+        }
+
+
+        function changeSlogan(a) {
+            if (slogan !== a) {
+                const fadeTarget = document.getElementById("slogan");
+                fadeTarget.style.opacity = "1";
+                fadeTarget.style.transition = "opacity 0.3s";
+                fadeTarget.style.opacity = "0";
+                clearTimeout(slogantimeout);
+                setTimeout(function () {
+                    fadeTarget.innerHTML = a;
+                    fadeTarget.style.visibility = 'visible';
+                    fadeTarget.style.opacity = "0";
+                    fadeTarget.style.transition = "opacity 0.1s";
+                    fadeTarget.style.opacity = "1";
+                }, 300);
+            }
+        }
+
+        function changeImageP3(a) {
+            const fadeTarget = document.getElementById("img3");
+            fadeTarget.style.opacity = "0";
+            document.getElementById("img3").src = a;
+            fadeTarget.style.transition = "opacity 0.3s";
+            fadeTarget.style.opacity = "1";
+            imagec = a;
+        }
+
+        function fadeOutEffect3(a) {
+            if (imagec === 0) {
+                const fadeTarget = document.getElementById("img3");
+                fadeTarget.style.opacity = "1";
+                fadeTarget.style.transition = "opacity 0.3s";
+                fadeTarget.style.opacity = "0";
+            } else {
+                if (imagec !== a) {
+                    const fadeTarget = document.getElementById("img3");
+                    fadeTarget.style.opacity = "1";
+                    fadeTarget.style.transition = "opacity 0.3s";
+                    fadeTarget.style.opacity = "0";
+                    imagectimeout = setTimeout(function () {
+                        document.getElementById("img3").src = imagec;
+                        fadeTarget.style.opacity = "0";
+                        fadeTarget.style.transition = "opacity 0.3s";
+                        fadeTarget.style.opacity = "1";
+                    }, 300);
+
+
+                }
+            }
+        }
+
+        function changeImage3(a) {
+            if (imagec !== a) {
+                const fadeTarget = document.getElementById("img3");
+                fadeTarget.style.opacity = "1";
+                fadeTarget.style.transition = "opacity 0.3s";
+                fadeTarget.style.opacity = "0";
+                clearTimeout(imagectimeout);
+                setTimeout(function () {
+                    document.getElementById("img3").src = a;
+                    fadeTarget.style.opacity = "0";
+                    fadeTarget.style.transition = "opacity 0.1s";
+                    fadeTarget.style.opacity = "1";
+                }, 300);
+            }
+        }
+
+        //Slogan
+        function changeSloganP3(a) {
+            const fadeTarget = document.getElementById("slogan3");
+            fadeTarget.style.opacity = "0";
+            fadeTarget.innerHTML = a;
+            fadeTarget.style.transition = "opacity 0.3s";
+            fadeTarget.style.opacity = "1";
+            sloganc = a;
+
+        }
+
+        function SloganFadeOutEffect3(a) {
+            if (sloganc === 0) {
+                const fadeTarget = document.getElementById("slogan3");
+                fadeTarget.style.opacity = "1";
+                fadeTarget.style.transition = "opacity 0.3s";
+                fadeTarget.style.opacity = "0";
+            } else {
+                if (sloganc !== a) {
+                    const fadeTarget = document.getElementById("slogan3");
+                    fadeTarget.style.opacity = "1";
+                    fadeTarget.style.transition = "opacity 0.3s";
+                    fadeTarget.style.opacity = "0";
+                    sloganctimeout = setTimeout(function () {
+                        fadeTarget.innerHTML = sloganc;
+                        fadeTarget.style.opacity = "0";
+                        fadeTarget.style.transition = "opacity 0.3s";
+                        fadeTarget.style.opacity = "1";
+                    }, 300);
+
+
+                }
+            }
+        }
+
+
+        function changeSlogan3(a) {
+            if (sloganc !== a) {
+                const fadeTarget = document.getElementById("slogan3");
+                fadeTarget.style.opacity = "1";
+                fadeTarget.style.transition = "opacity 0.3s";
+                fadeTarget.style.opacity = "0";
+                clearTimeout(sloganctimeout);
+                setTimeout(function () {
+                    fadeTarget.innerHTML = a;
+                    fadeTarget.style.opacity = "0";
+                    fadeTarget.style.visibility = 'visible';
+                    fadeTarget.style.transition = "opacity 0.1s";
+                    fadeTarget.style.opacity = "1";
+                }, 300);
+            }
+        }
+
+        function nextpage3() {
+            document.getElementById("next").disabled = false;
+            document.getElementById("tab4").removeAttribute('class');
+        }
+
+        function changeImageP2(a) {
+            const fadeTarget = document.getElementById("img2");
+            fadeTarget.style.opacity = "0";
+            document.getElementById("img2").src = a;
+            fadeTarget.style.transition = "opacity 0.3s";
+            fadeTarget.style.opacity = "1";
+            imageb = a;
+        }
+
+        function fadeOutEffect2(a) {
+            if (imageb === 0) {
+                const fadeTarget = document.getElementById("img2");
+                fadeTarget.style.opacity = "1";
+                fadeTarget.style.transition = "opacity 0.3s";
+                fadeTarget.style.opacity = "0";
+            } else {
+                if (imageb !== a) {
+                    const fadeTarget = document.getElementById("img2");
+                    fadeTarget.style.opacity = "1";
+                    fadeTarget.style.transition = "opacity 0.3s";
+                    fadeTarget.style.opacity = "0";
+                    imagebtimeout = setTimeout(function () {
+                        document.getElementById("img2").src = imageb;
+                        fadeTarget.style.opacity = "0";
+                        fadeTarget.style.transition = "opacity 0.3s";
+                        fadeTarget.style.opacity = "1";
+                    }, 300);
+
+
+                }
+            }
+        }
+
+        function fadeInEffect2() {
+            const fadeTarget = document.getElementById("img2");
+            fadeTarget.style.opacity = "0";
+            fadeTarget.style.transition = "opacity 0.3s";
+            fadeTarget.style.opacity = "1";
+        }
+
+        function changeImage2(a) {
+            if (imageb !== a) {
+                const fadeTarget = document.getElementById("img2");
+                fadeTarget.style.opacity = "1";
+                fadeTarget.style.transition = "opacity 0.3s";
+                fadeTarget.style.opacity = "0";
+                clearTimeout(imagebtimeout);
+                setTimeout(function () {
+                    document.getElementById("img2").src = a;
+                    fadeTarget.style.opacity = "0";
+                    fadeTarget.style.transition = "opacity 0.1s";
+                    fadeTarget.style.opacity = "1";
+                }, 300);
+            }
+        }
+
+        //Slogan
+        function changeSloganP2(a) {
+            const fadeTarget = document.getElementById("slogan");
+            fadeTarget.style.opacity = "0";
+            fadeTarget.innerHTML = a;
+            fadeTarget.style.transition = "opacity 0.3s";
+            fadeTarget.style.opacity = "1";
+            sloganb = a;
+
+        }
+
+        function SloganFadeOutEffect2(a) {
+            if (sloganb === 0) {
+                const fadeTarget = document.getElementById("slogan2");
+                fadeTarget.style.opacity = "1";
+                fadeTarget.style.transition = "opacity 0.3s";
+                fadeTarget.style.opacity = "0";
+            } else {
+                if (sloganb !== a) {
+                    const fadeTarget = document.getElementById("slogan2");
+                    fadeTarget.style.opacity = "1";
+                    fadeTarget.style.transition = "opacity 0.3s";
+                    fadeTarget.style.opacity = "0";
+                    sloganbtimeout = setTimeout(function () {
+                        fadeTarget.innerHTML = sloganb;
+                        fadeTarget.style.opacity = "0";
+                        fadeTarget.style.transition = "opacity 0.3s";
+                        fadeTarget.style.opacity = "1";
+                    }, 300);
+
+
+                }
+            }
+        }
+
+
+        function changeSlogan2(a) {
+            if (sloganb !== a) {
+                const fadeTarget = document.getElementById("slogan2");
+                fadeTarget.style.opacity = "1";
+                fadeTarget.style.transition = "opacity 0.3s";
+                fadeTarget.style.opacity = "0";
+                clearTimeout(sloganbtimeout);
+                setTimeout(function () {
+                    fadeTarget.innerHTML = a;
+                    fadeTarget.style.opacity = "0";
+                    fadeTarget.style.visibility = 'visible';
+                    fadeTarget.style.transition = "opacity 0.1s";
+                    fadeTarget.style.opacity = "1";
+                }, 300);
+            }
+        }
+
+        function nextpage2() {
+            document.getElementById("next").disabled = false;
+            document.getElementById("tab3").removeAttribute('class');
+        }
+
+        function changeImageP4(a) {
+            const fadeTarget = document.getElementById("img4");
+            fadeTarget.style.opacity = "0";
+            document.getElementById("img4").src = a;
+            fadeTarget.style.transition = "opacity 0.3s";
+            fadeTarget.style.opacity = "1";
+            imaged = a;
+        }
+
+        function fadeOutEffect4(a) {
+            if (imaged === 0) {
+                const fadeTarget = document.getElementById("img4");
+                fadeTarget.style.opacity = "1";
+                fadeTarget.style.transition = "opacity 0.3s";
+                fadeTarget.style.opacity = "0";
+            } else {
+                if (imaged !== a) {
+                    const fadeTarget = document.getElementById("img4");
+                    fadeTarget.style.opacity = "1";
+                    fadeTarget.style.transition = "opacity 0.3s";
+                    fadeTarget.style.opacity = "0";
+                    imagedtimeout = setTimeout(function () {
+                        document.getElementById("img4").src = imaged;
+                        fadeTarget.style.opacity = "0";
+                        fadeTarget.style.transition = "opacity 0.3s";
+                        fadeTarget.style.opacity = "1";
+                    }, 300);
+
+
+                }
+            }
+        }
+
+        function fadeInEffect4() {
+            const fadeTarget = document.getElementById("img4");
+            fadeTarget.style.opacity = "0";
+            fadeTarget.style.transition = "opacity 0.3s";
+            fadeTarget.style.opacity = "1";
+        }
+
+        function changeImage4(a) {
+            if (imaged !== a) {
+                const fadeTarget = document.getElementById("img4");
+                fadeTarget.style.opacity = "1";
+                fadeTarget.style.transition = "opacity 0.3s";
+                fadeTarget.style.opacity = "0";
+                clearTimeout(imagedtimeout);
+                setTimeout(function () {
+                    document.getElementById("img4").src = a;
+                    fadeTarget.style.opacity = "0";
+                    fadeTarget.style.transition = "opacity 0.1s";
+                    fadeTarget.style.opacity = "1";
+                }, 300);
+            }
+        }
+
+        //Slogan
+        function changeSloganP4(a) {
+            const fadeTarget = document.getElementById("slogan4");
+            fadeTarget.style.opacity = "0";
+            fadeTarget.innerHTML = a;
+            fadeTarget.style.transition = "opacity 0.3s";
+            fadeTarget.style.opacity = "1";
+            slogand = a;
+
+        }
+
+        function SloganFadeOutEffect4(a) {
+            if (slogand === 0) {
+                const fadeTarget = document.getElementById("slogan4");
+                fadeTarget.style.opacity = "1";
+                fadeTarget.style.transition = "opacity 0.3s";
+                fadeTarget.style.opacity = "0";
+            } else {
+                if (slogand !== a) {
+                    const fadeTarget = document.getElementById("slogan4");
+                    fadeTarget.style.opacity = "1";
+                    fadeTarget.style.transition = "opacity 0.3s";
+                    fadeTarget.style.opacity = "0";
+                    slogandtimeout = setTimeout(function () {
+                        fadeTarget.innerHTML = slogand;
+                        fadeTarget.style.opacity = "0";
+                        fadeTarget.style.transition = "opacity 0.3s";
+                        fadeTarget.style.opacity = "1";
+                    }, 300);
+
+
+                }
+            }
+        }
+
+
+        function changeSlogan4(a) {
+            if (slogand !== a) {
+                const fadeTarget = document.getElementById("slogan4");
+                fadeTarget.style.opacity = "1";
+                fadeTarget.style.transition = "opacity 0.3s";
+                fadeTarget.style.opacity = "0";
+                clearTimeout(slogandtimeout);
+                setTimeout(function () {
+                    fadeTarget.innerHTML = a;
+                    fadeTarget.style.opacity = "0";
+                    fadeTarget.style.visibility = 'visible';
+                    fadeTarget.style.transition = "opacity 0.1s";
+                    fadeTarget.style.opacity = "1";
+                }, 300);
+            }
+        }
+
+        changeImageP('https://images.pexels.com/photos/1741205/pexels-photo-1741205.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500');
+
+    </script>
+    <script src="{% static 'js3/jquery-2.2.4.min.js' %}" type="text/javascript"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            $("#HB").click(function () {
+                $("#next").attr("disabled", false);
+                $("#tab2").removeClass("inactiveLink");
+            });
+            $("#HG").click(function () {
+                $("#next2").attr("disabled", false);
+                $("#tab3").removeClass("inactiveLink");
+            });
+            $("#HC").click(function () {
+                $("#next3").attr("disabled", false);
+                $("#tab4").removeClass("inactiveLink");
+            });
+            $("#AHC").click(function () {
+                $("#next4").attr("disabled", false);
+            });
+
+        });
+
+
+    </script>
+
+
+</head>
+
+<body>
+<div class="image-container set-full-height" style=" background-image: linear-gradient(to right, #6a11cb, #2575fc);">
+
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-8 col-sm-offset-2">
+                <div class="wizard-container">
+                    <div class="card wizard-card" data-color="purple" id="wizard"
+                         style="width: 120%;position: relative;left: -75px;bottom: 70px;">
+                        <form action="Vote_2" method="get" autocomplete="on">
+                            <div class="wizard-header">
+                                <img id="logo" src="{% static 'img3/logo.png' %}" alt="logo" height="90">
+                                <h5 class="wizard-title" style="color: #1e88e5;font-size: 30px;font-weight: 900; ">ARMY
+                                    PUBLIC SCHOOL</h5>
+                            </div>
+                            <div class="wizard-navigation" id="tabs">
+                                <ul>
+                                    <li><a id="tab1" href="#HB" data-toggle="tab">Head Boy</a></li>
+                                    <li><a id="tab2" href="#HG" data-toggle="tab" class="inactiveLink">Head Girl</a>
+                                    </li>
+                                    <li><a id="tab3" href="#HC" data-toggle="tab" class="inactiveLink">House
+                                        Captain</a></li>
+                                    <li><a id="tab4" href="#AHC" data-toggle="tab" class="inactiveLink">Asst.
+                                        House Captain</a></li>
+
+                                </ul>
+                            </div>
+
+                            <div class="tab-content">
+                                <div class="tab-pane" id="HB">
+                                    <div class="row">
+
+                                        <fieldset id="group1">
+                                            <div class="col-sm-12">
+                                                <img id="img" style="opacity: 0;" class="shadow"
+                                                     src="https://images.pexels.com/photos/35537/child-children-girl-happy.jpg?auto=compress&cs=tinysrgb&dpr=1&w=500"
+                                                     alt="Image" height="120" width="100">
+                                            </div>
+                                            <div class="col-sm-12" style="text-align: center;">
+                                                <label id="slogan" class="slogan"
+                                                       style="visibility: hidden">Candidate Slogan</label>
+                                            </div>
+                                            <div class="col-sm-5 col-sm-offset-1">
+                                                <div class="form-group label-floating">
+                                                    <div class="inputGroup">
+                                                        <input id="radioA4" name="HB" type="radio" value="s.p"/>
+                                                        <label for="radioA4"
+                                                               onclick="
+                                                               changeSloganP('candidate slogan 1');
+                                                               changeImageP('https://images.pexels.com/photos/1741205/pexels-photo-1741205.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500')"
+                                                               onmouseover='changeSlogan("candidate slogan 1");
+                                                               changeImage("https://images.pexels.com/photos/1741205/pexels-photo-1741205.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500");'
+                                                               onmouseout="SloganFadeOutEffect('candidate slogan 1');
+                                                               fadeOutEffect('https://images.pexels.com/photos/1741205/pexels-photo-1741205.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500');">Demo
+                                                            text</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-5">
+                                                <div class="form-group label-floating">
+                                                    <div class="inputGroup">
+                                                        <input id="radioA1" name="HB" type="radio"/>
+                                                        <label style="font-family:'Roboto',sans-serif;" for="radioA1"
+                                                               onclick="
+                                                               changeSloganP('candidate slogan 2');
+                                                               changeImageP('https://images.pexels.com/photos/104827/cat-pet-animal-domestic-104827.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500');"
+                                                               onmouseout="SloganFadeOutEffect('candidate slogan 2');
+                                                               fadeOutEffect('https://images.pexels.com/photos/104827/cat-pet-animal-domestic-104827.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500');"
+                                                               onmouseover='changeSlogan("candidate slogan 2");
+                                                               changeImage("https://images.pexels.com/photos/104827/cat-pet-animal-domestic-104827.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500");'>
+                                                            Demo text 2</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-5 col-sm-offset-1">
+                                                <div class="form-group label-floating">
+                                                    <div class="inputGroup">
+                                                        <input id="radioA2" name="HB" type="radio"/>
+                                                        <label for="radioA2"
+                                                               onclick="
+                                                               changeSloganP('candidate slogan 3');
+                                                               changeImageP('https://images.pexels.com/photos/617278/pexels-photo-617278.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500');"
+                                                               onmouseout="SloganFadeOutEffect('candidate slogan 3');
+                                                               fadeOutEffect('https://images.pexels.com/photos/617278/pexels-photo-617278.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500');"
+                                                               onmouseover='changeSlogan("candidate slogan 3");
+                                                               changeImage("https://images.pexels.com/photos/617278/pexels-photo-617278.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500");'>Demo
+                                                            Text
+                                                            3 </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-5">
+                                                <div class="form-group label-floating">
+                                                    <div class="inputGroup">
+                                                        <input id="radioA3" name="HB" type="radio"/>
+                                                        <label for="radioA3"
+                                                               onclick="
+                                                               changeSloganP('candidate slogan 4');
+                                                               changeImageP('https://images.pexels.com/photos/1170986/pexels-photo-1170986.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500');"
+                                                               onmouseout="SloganFadeOutEffect('candidate slogan 4');
+                                                               fadeOutEffect('https://images.pexels.com/photos/1170986/pexels-photo-1170986.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500');"
+                                                               onmouseover='changeSlogan("candidate slogan 4");
+                                                               changeImage("https://images.pexels.com/photos/1170986/pexels-photo-1170986.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500");'
+                                                        >Demo Text
+                                                            4</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </fieldset>
+                                        <div class="wizard-footer">
+                                            <div class="pull-right">
+                                                <input style="top: 20px;" id="next" type='button'
+                                                       class='btn btn-next btn-fill btn-primary btn-wd'
+                                                       name='next' value='Next' disabled/>
+                                            </div>
+
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="tab-pane" id="HG">
+                                    <div class="row">
+                                        <fieldset id="HG">
+                                            <div class="col-sm-12">
+                                                <img id="img2" class="shadow" style="opacity: 0;"
+                                                     src="https://images.pexels.com/photos/35537/child-children-girl-happy.jpg?auto=compress&cs=tinysrgb&dpr=1&w=500"
+                                                     alt="Image" height="120" width="100">.
+                                            </div>
+                                            <div class="col-sm-12" style="text-align: center;">
+                                                <label id="slogan2"
+                                                       class="slogan" style="visibility:hidden;">This
+                                                    a sample slogan 1</label>
+                                            </div>
+                                            <div class="col-sm-5 col-sm-offset-1">
+                                                <div class="form-group label-floating">
+                                                    <div class="inputGroup">
+                                                        <input id="radioB4" name="HG" type="radio"/>
+                                                        <label for="radioB4"
+                                                               onclick="
+                                                               changeSloganP2('Candidate Slogan 1');
+                                                               changeImageP2('https://jimiamy.com/wp-content/uploads/2019/09/d254ec3ab776e4345aaef1ced0379e23.jpg');"
+                                                               onmouseover="
+                                                               changeSlogan2('Candidate Slogan 1');
+                                                               changeImage2('https://jimiamy.com/wp-content/uploads/2019/09/d254ec3ab776e4345aaef1ced0379e23.jpg');"
+                                                               onmouseout="
+                                                               SloganFadeOutEffect2('Candidate Slogan 1');
+                                                               fadeOutEffect2('https://jimiamy.com/wp-content/uploads/2019/09/d254ec3ab776e4345aaef1ced0379e23.jpg');"
+                                                        >Demo text2</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-5">
+                                                <div class="form-group label-floating">
+                                                    <div class="inputGroup">
+                                                        <input id="radioB1" name="HG" type="radio"/>
+                                                        <label for="radioB1"
+                                                               onclick="
+                                                               changeSloganP2('candidate slogan 2');
+                                                               changeImageP2('https://images.unsplash.com/photo-1568001939548-be63c44d5bc6?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=334&q=80')"
+                                                               onmouseover='changeSlogan2("candidate slogan 2");
+                                                               changeImage2("https://images.unsplash.com/photo-1568001939548-be63c44d5bc6?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=334&q=80");'
+                                                               onmouseout="SloganFadeOutEffect2('candidate slogan 2');
+                                                               fadeOutEffect2('https://images.unsplash.com/photo-1568001939548-be63c44d5bc6?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=334&q=80');"
+                                                        >S.Prasanna Venkatesh</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-5 col-sm-offset-1">
+                                                <div class="form-group label-floating">
+                                                    <div class="inputGroup">
+                                                        <input id="radioB2" name="HG" type="radio"/>
+                                                        <label for="radioB2"
+                                                               onclick="
+                                                               changeSloganP2('candidate slogan 3');
+                                                               changeImageP2('https://images.unsplash.com/photo-1579014868745-23e405c5605d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=375&q=80')"
+                                                               onmouseover='changeSlogan2("candidate slogan 3");
+                                                               changeImage2("https://images.unsplash.com/photo-1579014868745-23e405c5605d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=375&q=80");'
+                                                               onmouseout="SloganFadeOutEffect2('candidate slogan 3');
+                                                               fadeOutEffect2('https://images.unsplash.com/photo-1579014868745-23e405c5605d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=375&q=80');"
+                                                        >S.Prasanna Venkatesh</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-5">
+                                                <div class="form-group label-floating">
+                                                    <div class="inputGroup">
+                                                        <input id="radioB3" name="HG" type="radio"/>
+                                                        <label for="radioB3"
+                                                               onclick="nextpage2();
+                                                               changeSloganP2('candidate slogan 4');
+                                                               changeImageP2('https://images.unsplash.com/photo-1580780651293-b88770a4d88d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=334&q=80')"
+                                                               onmouseover='changeSlogan2("candidate slogan 4");
+                                                               changeImage2("https://images.unsplash.com/photo-1580780651293-b88770a4d88d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=334&q=80");'
+                                                               onmouseout="SloganFadeOutEffect2('candidate slogan 4');
+                                                               fadeOutEffect2('https://images.unsplash.com/photo-1580780651293-b88770a4d88d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=334&q=80');"
+                                                        >S.Prasanna Venkatesh</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </fieldset>
+                                        <div class="wizard-footer">
+                                            <div class="pull-right">
+                                                <input style="top: 20px;" id="next2" type='button'
+                                                       class='btn btn-next btn-fill btn-primary btn-wd'
+                                                       name='next' value='Next' disabled/>
+                                            </div>
+                                            <div class="pull-left">
+                                                <input style="top: 20px;" type='button'
+                                                       class='btn btn-previous btn-fill btn-default btn-wd'
+                                                       name='previous' value='Previous'/>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="tab-pane" id="HC">
+                                    <div class="row">
+                                        <fieldset id="HC">
+                                            <div class="col-sm-12">
+                                                <img id="img3" style="opacity: 0;"
+                                                     src="https://images.pexels.com/photos/35537/child-children-girl-happy.jpg?auto=compress&cs=tinysrgb&dpr=1&w=500"
+                                                     alt="Image" class="shadow" height="120" width="100">
+                                            </div>
+                                            <div class="col-sm-12" style="text-align: center">
+                                                <label id="slogan3" class="slogan" style="visibility: hidden;">This
+                                                    a sample slogan 1</label>
+                                            </div>
+                                            <div class="col-sm-5 col-sm-offset-1">
+                                                <div class="form-group label-floating">
+                                                    <div class="inputGroup">
+                                                        <input id="radioC4" name="HC" type="radio"/>
+                                                        <label for="radioC4"
+                                                               onclick="
+                                                               changeSloganP3('candidate slogan 1');
+                                                               changeImageP3('https://images.unsplash.com/photo-1568051131681-2157f7793bcf?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=750&q=80');"
+                                                               onmouseover='changeSlogan3("candidate slogan 1");
+                                                               changeImage3("https://images.unsplash.com/photo-1568051131681-2157f7793bcf?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=750&q=80");'
+                                                               onmouseout="SloganFadeOutEffect3('candidate slogan 1');
+                                                               fadeOutEffect3('https://images.unsplash.com/photo-1568051131681-2157f7793bcf?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=750&q=80');">
+                                                            Demo text</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-5">
+                                                <div class="form-group label-floating">
+                                                    <div class="inputGroup">
+                                                        <input id="radioC1" name="HC" type="radio"/>
+                                                        <label for="radioC1"
+                                                               onclick="
+                                                               changeSloganP3('candidate slogan 2');
+                                                               changeImageP3('https://images.pexels.com/photos/1741205/pexels-photo-1741205.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500')"
+                                                               onmouseover='changeSlogan3("candidate slogan 2");
+                                                               changeImage3("https://images.pexels.com/photos/1741205/pexels-photo-1741205.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500");'
+                                                               onmouseout="SloganFadeOutEffect3('candidate slogan 2');
+                                                               fadeOutEffect3('https://images.pexels.com/photos/1741205/pexels-photo-1741205.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500');"
+                                                        >S.Prasanna Venkatesh</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-5 col-sm-offset-1">
+                                                <div class="form-group label-floating">
+                                                    <div class="inputGroup">
+                                                        <input id="radioC2" name="HC" type="radio"/>
+                                                        <label for="radioC2"
+                                                               onclick="
+                                                               changeSloganP3('candidate slogan 3');
+                                                               changeImageP3('https://images.unsplash.com/photo-1557246565-8a3d3ab5d7f6?ixlib=rb-1.2.1&auto=format&fit=crop&w=750&q=80')"
+                                                               onmouseover='changeSlogan3("candidate slogan 3");
+                                                               changeImage3("https://images.unsplash.com/photo-1557246565-8a3d3ab5d7f6?ixlib=rb-1.2.1&auto=format&fit=crop&w=750&q=80");'
+                                                               onmouseout="SloganFadeOutEffect3('candidate slogan 3');
+                                                               fadeOutEffect3('https://images.unsplash.com/photo-1557246565-8a3d3ab5d7f6?ixlib=rb-1.2.1&auto=format&fit=crop&w=750&q=80');"
+                                                        >S.Prasanna Venkatesh</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-5">
+                                                <div class="form-group label-floating">
+                                                    <div class="inputGroup">
+                                                        <input id="radioC3" name="HC" type="radio"/>
+                                                        <label for="radioC3"
+                                                               onclick="
+                                                               changeSloganP3('candidate slogan 4');
+                                                               changeImageP3('https://images.unsplash.com/photo-1578335884013-ddbed9afaeb9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=752&q=80')"
+                                                               onmouseover='changeSlogan3("candidate slogan 4");
+                                                               changeImage3("https://images.unsplash.com/photo-1578335884013-ddbed9afaeb9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=752&q=80");'
+                                                               onmouseout="SloganFadeOutEffect3('candidate slogan 4');
+                                                               fadeOutEffect3('https://images.unsplash.com/photo-1578335884013-ddbed9afaeb9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=752&q=80');"
+                                                        >S.Prasanna Venkatesh</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </fieldset>
+                                        <div class="wizard-footer">
+                                            <div class="pull-right">
+                                                <input style="top: 20px;" id="next3" type='button'
+                                                       class='btn btn-next btn-fill btn-primary btn-wd'
+                                                       name='next' value='Next' disabled/>
+                                            </div>
+                                            <div class="pull-left">
+                                                <input style="top: 20px;" type='button'
+                                                       class='btn btn-previous btn-fill btn-default btn-wd'
+                                                       name='previous' value='Previous'/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="tab-pane" id="AHC">
+                                    <div class="row">
+                                        <fieldset id="AHC">
+                                            <div class="col-sm-12">
+                                                <img id="img4" class="shadow" style="opacity: 0;"
+                                                     src="https://images.pexels.com/photos/35537/child-children-girl-happy.jpg?auto=compress&cs=tinysrgb&dpr=1&w=500"
+                                                     alt="Image" height="120" width="100">
+                                            </div>
+                                            <div class="col-sm-12" style="text-align: center">
+                                                <label id="slogan4"
+                                                       class="slogan" style="visibility: hidden">Candidate
+                                                    Slogan</label>
+                                            </div>
+                                            <div class="col-sm-5 col-sm-offset-1">
+                                                <div class="form-group label-floating">
+                                                    <div class="inputGroup">
+                                                        <input id="radioD4" name="AHC" type="radio"/>
+                                                        <label for="radioD4"
+                                                               onclick="
+                                                               changeSloganP4('candidate slogan 1');
+                                                               changeImageP4('https://images.unsplash.com/photo-1555606396-79625d075363?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=334&q=80')"
+                                                               onmouseover='changeSlogan4("candidate slogan 1");
+                                                               changeImage4("https://images.unsplash.com/photo-1555606396-79625d075363?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=334&q=80");'
+                                                               onmouseout="SloganFadeOutEffect4('candidate slogan 1');
+                                                               fadeOutEffect4('https://images.unsplash.com/photo-1555606396-79625d075363?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=334&q=80');">
+                                                            Demo text</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-5">
+                                                <div class="form-group label-floating">
+                                                    <div class="inputGroup">
+                                                        <input id="radioD1" name="AHC" type="radio"/>
+                                                        <label for="radioD1"
+                                                               onclick="
+                                                               changeSloganP4('candidate slogan 2');
+                                                               changeImageP4('https://images.unsplash.com/photo-1579202673506-ca3ce28943ef?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=334&q=80')"
+                                                               onmouseover='changeSlogan4("candidate slogan 2");
+                                                               changeImage4("https://images.unsplash.com/photo-1579202673506-ca3ce28943ef?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=334&q=80");'
+                                                               onmouseout="SloganFadeOutEffect4('candidate slogan 2');
+                                                               fadeOutEffect4('https://images.unsplash.com/photo-1579202673506-ca3ce28943ef?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=334&q=80');"
+                                                        >S.Prasanna Venkatesh</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-5 col-sm-offset-1">
+                                                <div class="form-group label-floating">
+                                                    <div class="inputGroup">
+                                                        <input id="radioD2" name="AHC" type="radio"/>
+                                                        <label for="radioD2"
+                                                               onclick="
+                                                               changeSloganP4('candidate slogan 3');
+                                                               changeImageP4('https://images.unsplash.com/photo-1570824105192-a7bb72b73141?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=467&q=80')"
+                                                               onmouseover='changeSlogan4("candidate slogan 3");
+                                                               changeImage4("https://images.unsplash.com/photo-1570824105192-a7bb72b73141?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=467&q=80");'
+                                                               onmouseout="SloganFadeOutEffect4('candidate slogan 3');
+                                                               fadeOutEffect4('https://images.unsplash.com/photo-1570824105192-a7bb72b73141?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=467&q=80');"
+                                                        >S.Prasanna Venkatesh</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-5">
+                                                <div class="form-group label-floating">
+                                                    <div class="inputGroup">
+                                                        <input id="radioD3" name="AHC" type="radio"/>
+                                                        <label for="radioD3"
+                                                               onclick="
+                                                               changeSloganP4('candidate slogan 4');
+                                                               changeImageP4('https://images.unsplash.com/photo-1586336208625-cfa9d024c759?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=734&q=80')"
+                                                               onmouseover='changeSlogan4("candidate slogan 4");
+                                                               changeImage4("https://images.unsplash.com/photo-1586336208625-cfa9d024c759?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=734&q=80");'
+                                                               onmouseout="SloganFadeOutEffect4('candidate slogan 4');
+                                                               fadeOutEffect4('https://images.unsplash.com/photo-1586336208625-cfa9d024c759?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=734&q=80');"
+                                                        >S.Prasanna Venkatesh</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </fieldset>
+                                        <div class="wizard-footer">
+                                            <div class="pull-left">
+                                                <input style="top: 20px;" type='button'
+                                                       class='btn btn-previous btn-fill btn-default btn-wd'
+                                                       name='previous' value='Previous'/>
+                                            </div>
+                                            <div class="pull-right">
+                                                <input type='submit' style="top: 20px;" id="next4"
+                                                       class='btn btn-finish btn-fill btn-primary btn-wd'
+                                                       name='Next' value='Next' onclick="setcookie();" disabled/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="clearfix"></div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+</body>
+<script src="{% static 'js3/bootstrap.min.js' %}" type="text/javascript"></script>
+<script src="{% static 'js3/jquery.bootstrap.js' %}" type="text/javascript"></script>
+<script src="{% static 'js3/material-bootstrap-wizard.js' %}"></script>
+<script src="{% static 'js3/jquery.validate.min.js' %}"></script>
+<script src="{% static 'vue/vue.js' %}"></script>
+</html>
